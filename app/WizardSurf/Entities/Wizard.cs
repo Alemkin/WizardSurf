@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +9,8 @@ namespace WizardSurf.Desktop.Entities {
     private Texture2D texture;
     private Vector2 position;
     private float velocity = 5f;
+    private float acceleration = .01f;
+    private float maxVelocity = 15f;
 
     public Wizard (Game1 game) : base(game) {
       position = game.screenCenter;
@@ -29,16 +32,19 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     private void HandleKeyboardInput() {
+      //TODO cap and reset when let go of keyboard key
+      velocity += acceleration;
+      var currentVelocity = Math.Min(velocity, maxVelocity);
       if (game.inputHelper.IsKeyDown (Keys.Right)) {
-        position.X += velocity;
+        position.X += currentVelocity;
       } else if (game.inputHelper.IsKeyDown (Keys.Left)) {
-        position.X -= velocity;
+        position.X -= currentVelocity;
       }
 
       if (game.inputHelper.IsKeyDown(Keys.Down)) {
-        position.Y += velocity;
+        position.Y += currentVelocity;
       } else if (game.inputHelper.IsKeyDown(Keys.Up)) {
-        position.Y -= velocity;
+        position.Y -= currentVelocity;
       }
     }
   }
