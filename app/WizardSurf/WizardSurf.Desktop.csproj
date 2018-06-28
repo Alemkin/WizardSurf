@@ -53,6 +53,7 @@
     <Compile Include="Entities\PowerUp.cs" />
     <Compile Include="Screens\BaseScreen.cs" />
     <Compile Include="Screens\SurfScreen.cs" />
+    <Compile Include="DebugPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

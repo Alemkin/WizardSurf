@@ -14,6 +14,8 @@ namespace WizardSurf.Desktop {
     // TODO add screen manager that will handle all of the screens via menus
     public Entity surfScreen;
 
+    public DebugPanel debugPanel;
+
     public Game1() {
       graphics = new GraphicsDeviceManager(this);
       graphics.PreferredBackBufferWidth = 1280;
@@ -28,21 +30,25 @@ namespace WizardSurf.Desktop {
       spriteBatch = new SpriteBatch(GraphicsDevice);
       inputHelper = new InputHelper();
       surfScreen = new SurfScreen(this);
+      debugPanel = new DebugPanel(this);
       base.Initialize();
     }
 
     protected override void LoadContent() {
       surfScreen.LoadContent();
+      debugPanel.LoadContent();
     }
 
     protected override void UnloadContent() {
       surfScreen.UnloadContent();
+      debugPanel.UnloadContent();
     }
 
     protected override void Update(GameTime gameTime) {
       inputHelper.Update();
       if (inputHelper.IsNewKeyPress(Keys.Escape)) { Exit(); }
       surfScreen.Update(gameTime);
+      debugPanel.Update(gameTime);
       base.Update(gameTime);
     }
 
@@ -50,6 +56,7 @@ namespace WizardSurf.Desktop {
       GraphicsDevice.Clear(Color.CornflowerBlue);
       spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, null);
       surfScreen.Draw(gameTime);
+      debugPanel.Draw(gameTime);
       spriteBatch.End();
       base.Draw(gameTime);
     }

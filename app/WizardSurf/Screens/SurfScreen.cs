@@ -27,7 +27,6 @@ namespace WizardSurf.Desktop.Screens {
 
     public override void Draw(GameTime gameTime) {
       wizard.Draw(gameTime);
-      //TODO draw fraemrate
       //TODO draw current velocity
     }
   }
