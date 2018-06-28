@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace WizardSurf.Desktop.Entities {
+  //TODO load spritesheet
+  //TODO use sheet to animate wizard
   public class Wizard : BaseEntity {
 
     private Texture2D texture;
