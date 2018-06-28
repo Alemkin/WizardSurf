@@ -8,6 +8,7 @@ namespace WizardSurf.Desktop.Entities {
   //TODO use sheet to animate wizard
   public class Wizard : BaseEntity {
 
+    //Build particle engine and add particles under wizard
     private Texture2D texture;
     private Vector2 position;
     private float velocity = 5f;
