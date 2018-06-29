@@ -11,6 +11,7 @@ namespace WizardSurf.Desktop {
     public Vector2 screenCenter;
     public SpriteBatch spriteBatch;
 
+    // TODO add menu screen
     // TODO add screen manager that will handle all of the screens via menus
     public Entity surfScreen;
 

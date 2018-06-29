@@ -11,6 +11,7 @@ namespace WizardSurf.Desktop.Screens {
     Rectangle skyRectangle;
     private Wizard wizard;
     private Fireballs fireballs;
+    //TODO add background music
 
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
