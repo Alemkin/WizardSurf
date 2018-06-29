@@ -19,6 +19,7 @@ namespace WizardSurf.Desktop.Entities {
     private float velocity = 5f;
     private float acceleration = .01f;
     private float maxVelocity = 15f;
+    //TODO add life and collisions
 
     private int aY = 0;
 

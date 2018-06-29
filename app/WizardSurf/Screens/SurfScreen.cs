@@ -12,6 +12,7 @@ namespace WizardSurf.Desktop.Screens {
     private Wizard wizard;
     private Fireballs fireballs;
     //TODO add background music
+    //TODO on updates check location of wizard + fireballs and see if any collisions, and apply damage
 
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
