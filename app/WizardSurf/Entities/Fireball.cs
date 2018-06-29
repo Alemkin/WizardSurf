@@ -12,6 +12,7 @@ namespace WizardSurf.Desktop.Entities {
     private float rotation;
     private Vector2 velocity;
     //TODO collision detector
+    //TODO use particle engine to enhance fireball
 
     public bool offScreen = false;
     public Fireball(Game1 game, Vector2 velocity, Vector2 startPosition, float rotation) : base(game) {
