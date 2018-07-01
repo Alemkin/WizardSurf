@@ -55,7 +55,8 @@ namespace WizardSurf.Desktop {
 
     protected override void Draw(GameTime gameTime) {
       GraphicsDevice.Clear(Color.CornflowerBlue);
-      spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, null);
+      spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
+                        DepthStencilState.None, RasterizerState.CullCounterClockwise);
       surfScreen.Draw(gameTime);
       debugPanel.Draw(gameTime);
       spriteBatch.End();

@@ -7,14 +7,14 @@ namespace WizardSurf.Desktop.Entities {
   public class Fireball : BaseEntity {
 
     private Texture2D texture;
-    private Vector2 position;
+    public Vector2 position;
     //TODO implement rotation
     private float rotation;
     private Vector2 velocity;
     //TODO collision detector
     //TODO use particle engine to enhance fireball
 
-    public bool offScreen = false;
+    public Boolean offScreen = false;
     public Fireball(Game1 game, Vector2 velocity, Vector2 startPosition, float rotation) : base(game) {
       position = startPosition;
       this.rotation = rotation;
@@ -23,6 +23,7 @@ namespace WizardSurf.Desktop.Entities {
 
     public override void LoadContent() {
       texture = game.Content.Load<Texture2D>("fireball");
+      origin = new Vector2(texture.Width / 2, texture.Height / 2);
     }
 
     public override void UnloadContent() {

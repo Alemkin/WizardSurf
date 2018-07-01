@@ -7,7 +7,8 @@ using WizardSurf.Desktop.Entities;
 namespace WizardSurf.Desktop.EntityImplementations {
   public class Fireballs : BaseEntity {
     //TODO list of fireballs, randomized
-    Fireball fireball;
+    // TODO add abstract spawner
+    public Fireball fireball;
 
     public Fireballs(Game1 game) : base(game) {
       var position =
@@ -36,6 +37,10 @@ namespace WizardSurf.Desktop.EntityImplementations {
           fireball = null;
         }
       }
+    }
+
+    public Vector2 GetFireballPosition() {
+      return fireball == null ? new Vector2(0f, 0f) : fireball.position;
     }
 
     public override void Draw(GameTime gameTime) {

@@ -9,12 +9,16 @@ namespace WizardSurf.Desktop {
 
     private Vector2 secondsTitlePosition;
     private Vector2 frameratePosition;
+    private Vector2 velocityPosition;
+
+    public float wizardVelocity = 0f;
 
     private int currentFramerate;
 
     public DebugPanel(Game1 game) : base(game) {
       secondsTitlePosition = new Vector2(20, 5);
       frameratePosition = new Vector2(20, 25);
+      velocityPosition = new Vector2(20, 45);
     }
 
     public override void LoadContent() {
@@ -38,6 +42,7 @@ namespace WizardSurf.Desktop {
     public override void Draw(GameTime gameTime) {
       game.spriteBatch.DrawString(font, "Elapsed Time: " + gameTime.TotalGameTime.Seconds.ToString() + " seconds", secondsTitlePosition, Color.White);
       game.spriteBatch.DrawString(font, "Framerate: " + currentFramerate.ToString(), frameratePosition, Color.White);
+      game.spriteBatch.DrawString(font, "Current Velocity: " + wizardVelocity.ToString(), velocityPosition, Color.White);
     }
   }
 }

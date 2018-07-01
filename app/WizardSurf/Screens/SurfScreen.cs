@@ -34,13 +34,18 @@ namespace WizardSurf.Desktop.Screens {
     public override void Update(GameTime gameTime) {
       wizard.Update(gameTime);
       fireballs.Update(gameTime);
+      if (Vector2.Distance(fireballs.GetFireballPosition(), wizard.position) < 5f) {
+        wizard.ApplyHealth(-10f);
+      }
+      if (wizard.IsDead && wizard.CurrentState == BaseEntity.State.DESTROYED) {
+        wizard.UnloadContent();
+      }
     }
 
     public override void Draw(GameTime gameTime) {
       game.spriteBatch.Draw(skyBackground, skyRectangle, Color.White);
       wizard.Draw(gameTime);
       fireballs.Draw(gameTime);
-      //TODO draw current velocity
     }
   }
 }
