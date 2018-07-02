@@ -33,11 +33,18 @@ namespace WizardSurf.Desktop.Screens {
 
     public override void Update(GameTime gameTime) {
       wizard.Update(gameTime);
+      CheckIfFireballCollision(gameTime);
+    }
+
+    private void CheckIfFireballCollision(GameTime gameTime) {
+      //TODO fix this when adding random fireballs, and add function to Fireballs.cs
       fireballs.Update(gameTime);
-      if (Vector2.Distance(fireballs.GetFireballPosition(), wizard.position) < 5f) {
+      if (Vector2.Distance(fireballs.GetFireballPosition(), wizard.position) < 30f) {
+        fireballs.fireball.UnloadContent();
+        fireballs.fireball = null;
         wizard.ApplyHealth(-10f);
       }
-      if (wizard.IsDead && wizard.CurrentState == BaseEntity.State.DESTROYED) {
+      if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
         wizard.UnloadContent();
       }
     }

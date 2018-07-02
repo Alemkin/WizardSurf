@@ -7,6 +7,7 @@ namespace WizardSurf.Desktop.Entities {
   public class Fireball : BaseEntity {
 
     private Texture2D texture;
+    private Vector2 scale = new Vector2(.5f, .5f);
     public Vector2 position;
     //TODO implement rotation
     private float rotation;
@@ -23,7 +24,7 @@ namespace WizardSurf.Desktop.Entities {
 
     public override void LoadContent() {
       texture = game.Content.Load<Texture2D>("fireball");
-      origin = new Vector2(texture.Width / 2, texture.Height / 2);
+      origin = new Vector2(0f, 0f);
     }
 
     public override void UnloadContent() {
@@ -43,7 +44,7 @@ namespace WizardSurf.Desktop.Entities {
 
     public override void Draw(GameTime gameTime) {
       //TODO add rectangle, and location, and rotation
-      game.spriteBatch.Draw(texture, position, Color.White);
+      game.spriteBatch.Draw(texture, position, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
     }
 
     public void SetVelocity(Vector2 velocity) {
