@@ -26,7 +26,7 @@ namespace WizardSurf.Desktop.Entities {
     private float maxVelocity = 10f;
     public float radius;
 
-    private float currentLife = 10f;
+    private float currentLife = 15f;
 
     private Vector2 scale = new Vector2(.3f, .3f);
 
@@ -50,20 +50,6 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     private void CreateAnimations() {
-      //idleAnimation = spriteSheet.CreateAnimation((0, 0), (1, 0), (2, 0), (3, 0),
-      //                                        (0, 1), (1, 1), (2, 1), (3, 1),
-      //                                        (0, 2), (1, 2), (2, 2), (3, 2),
-      //                                        (0, 3), (1, 3), (2, 3), (3, 3));
-
-      //movingAnimation = spriteSheet.CreateAnimation((4, 0), (5, 0), (6, 0), (7, 0),
-      //                                        (4, 1), (5, 1), (6, 1), (7, 1),
-      //                                        (4, 2), (5, 2), (6, 2), (7, 2),
-      //                                        (4, 3), (5, 3), (6, 3), (7, 3));
-
-      //dyingAnimation = spriteSheet.CreateAnimation((4, 4), (5, 4), (6, 4), (7, 4),
-      //(4, 5), (5, 5), (6, 5), (7, 5),
-      //(4, 6), (5, 6), (6, 6), (7, 6),
-      //(4, 7), (5, 7), (6, 7), (7, 7));
       idleAnimation = idleSpriteSheet.CreateAnimation((0, 0), (1, 0), (2, 0), (3, 0), (4, 0));
       movingAnimation = flyingSpriteSheet.CreateAnimation((0, 0), (1, 0), (2, 0), (3, 0), (4, 0));
       dyingAnimation = dyingSpriteSheet.CreateAnimation((0, 0), (1, 0), (2, 0), (3, 0), (4, 0));
@@ -84,6 +70,7 @@ namespace WizardSurf.Desktop.Entities {
     private int deathTicker = 0;
     public override void Update(GameTime gameTime) {
       game.debugPanel.wizardVelocity = velocity;
+      game.debugPanel.wizardLife = currentLife;
 
       HandleWizardDeath();
       UpdateAnimations(gameTime);
@@ -152,8 +139,9 @@ namespace WizardSurf.Desktop.Entities {
       return new Vector2(position.X + theWidth, position.Y + theHeight);
     }
 
+    //TODO add collision handler instead
     public void ApplyHealth(float healthEffect) {
-      currentLife = Math.Max(currentLife + healthEffect, 0);
+      currentLife = Math.Max(currentLife + healthEffect, 0f);
     }
 
   }

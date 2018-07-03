@@ -39,12 +39,7 @@ namespace WizardSurf.Desktop.Screens {
     private void CheckIfFireballCollision(GameTime gameTime) {
       //TODO fix this when adding random fireballs, and add function to Fireballs.cs
       fireballs.Update(gameTime);
-      var radiusAdded = fireballs.GetFireballRadius() + wizard.radius;
-      if (Vector2.Distance(fireballs.GetFireballPosition(), wizard.GetPosition()) < radiusAdded - 40f) {
-        fireballs.fireball.UnloadContent();
-        fireballs.fireball = null;
-        wizard.ApplyHealth(-10f);
-      }
+      fireballs.CheckWizardCollisions(wizard);
       if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
         wizard.UnloadContent();
       }

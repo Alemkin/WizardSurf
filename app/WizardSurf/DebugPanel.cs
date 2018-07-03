@@ -10,8 +10,10 @@ namespace WizardSurf.Desktop {
     private Vector2 secondsTitlePosition;
     private Vector2 frameratePosition;
     private Vector2 velocityPosition;
+    private Vector2 lifePosition;
 
     public float wizardVelocity = 0f;
+    public float wizardLife = 0f;
 
     private int currentFramerate;
 
@@ -19,6 +21,7 @@ namespace WizardSurf.Desktop {
       secondsTitlePosition = new Vector2(20, 5);
       frameratePosition = new Vector2(20, 25);
       velocityPosition = new Vector2(20, 45);
+      lifePosition = new Vector2(game.graphics.GraphicsDevice.Viewport.Width / 2, 20);
     }
 
     public override void LoadContent() {
@@ -43,6 +46,7 @@ namespace WizardSurf.Desktop {
       game.spriteBatch.DrawString(font, "Elapsed Time: " + gameTime.TotalGameTime.Seconds.ToString() + " seconds", secondsTitlePosition, Color.White);
       game.spriteBatch.DrawString(font, "Framerate: " + currentFramerate.ToString(), frameratePosition, Color.White);
       game.spriteBatch.DrawString(font, "Current Velocity: " + wizardVelocity.ToString(), velocityPosition, Color.White);
+      game.spriteBatch.DrawString(font, "LIFE: " + wizardLife.ToString(), lifePosition, Color.CornflowerBlue);
     }
   }
 }
