@@ -6,24 +6,27 @@ using Microsoft.Xna.Framework.Input;
 namespace WizardSurf.Desktop.Entities {
   public class Fireball : BaseEntity {
 
-    private Texture2D texture;
-    private Vector2 scale = new Vector2(.5f, .5f);
+    public Texture2D texture;
+    private Vector2 scale = new Vector2(1f, 1f);
     public Vector2 position;
+    public Vector2 initialPosition;
     //TODO implement rotation
     private float rotation;
     private Vector2 velocity;
-    //TODO collision detector
     //TODO use particle engine to enhance fireball
+    public float radius;
 
     public Boolean offScreen = false;
     public Fireball(Game1 game, Vector2 velocity, Vector2 startPosition, float rotation) : base(game) {
       position = startPosition;
+      initialPosition = startPosition;
       this.rotation = rotation;
       this.velocity = velocity;
     }
 
     public override void LoadContent() {
       texture = game.Content.Load<Texture2D>("fireball");
+      radius = texture.Height / 2 * scale.Y;
       origin = new Vector2(0f, 0f);
     }
 
@@ -43,8 +46,11 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     public override void Draw(GameTime gameTime) {
-      //TODO add rectangle, and location, and rotation
       game.spriteBatch.Draw(texture, position, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+    }
+
+    public Vector2 GetPosition() {
+      return new Vector2(position.X + ((texture.Width / 2) * scale.X) , position.Y + ((texture.Height / 2) * scale.Y));
     }
 
     public void SetVelocity(Vector2 velocity) {

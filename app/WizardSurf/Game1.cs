@@ -19,8 +19,8 @@ namespace WizardSurf.Desktop {
 
     public Game1() {
       graphics = new GraphicsDeviceManager(this);
-      graphics.PreferredBackBufferWidth = 640;
-      graphics.PreferredBackBufferHeight = 480;
+      graphics.PreferredBackBufferWidth = 1280;
+      graphics.PreferredBackBufferHeight = 720;
       Window.Title = "Wizard";
       Window.AllowUserResizing = true;
       Content.RootDirectory = "Content";

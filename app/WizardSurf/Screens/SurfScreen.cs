@@ -7,7 +7,7 @@ using WizardSurf.Desktop.EntityImplementations;
 
 namespace WizardSurf.Desktop.Screens {
   public class SurfScreen : BaseScreen {
-    private Texture2D skyBackground;
+    private Texture2D background;
     Rectangle skyRectangle;
     private Wizard wizard;
     private Fireballs fireballs;
@@ -21,7 +21,7 @@ namespace WizardSurf.Desktop.Screens {
     }
 
     public override void LoadContent() {
-      skyBackground = game.Content.Load<Texture2D>("sky");
+      background = game.Content.Load<Texture2D>("background");
       wizard.LoadContent();
       fireballs.LoadContent();
     }
@@ -39,7 +39,8 @@ namespace WizardSurf.Desktop.Screens {
     private void CheckIfFireballCollision(GameTime gameTime) {
       //TODO fix this when adding random fireballs, and add function to Fireballs.cs
       fireballs.Update(gameTime);
-      if (Vector2.Distance(fireballs.GetFireballPosition(), wizard.position) < 30f) {
+      var radiusAdded = fireballs.GetFireballRadius() + wizard.radius;
+      if (Vector2.Distance(fireballs.GetFireballPosition(), wizard.GetPosition()) < radiusAdded - 40f) {
         fireballs.fireball.UnloadContent();
         fireballs.fireball = null;
         wizard.ApplyHealth(-10f);
@@ -50,7 +51,7 @@ namespace WizardSurf.Desktop.Screens {
     }
 
     public override void Draw(GameTime gameTime) {
-      game.spriteBatch.Draw(skyBackground, skyRectangle, Color.White);
+      game.spriteBatch.Draw(background, skyRectangle, Color.White);
       wizard.Draw(gameTime);
       fireballs.Draw(gameTime);
     }
