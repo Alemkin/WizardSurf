@@ -22,6 +22,7 @@ namespace WizardSurf.Desktop.Screens {
     private Rectangle gameOverColorRectangle;
     private Vector2 centerScreen;
 
+    //TODO add win condition, e.g. after 100 seconds, you win
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
       wizard = new Wizard(game);
@@ -53,6 +54,7 @@ namespace WizardSurf.Desktop.Screens {
     public override void Update(GameTime gameTime) {
       if (playingSong == false) {
         MediaPlayer.Play(song);
+        MediaPlayer.IsRepeating = true;
         playingSong = true;
       }
       if (paused == true) {
