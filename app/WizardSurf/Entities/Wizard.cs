@@ -16,19 +16,20 @@ namespace WizardSurf.Desktop.Entities {
     private Animation movingAnimation;
     private Animation movingLeftAnimation;
     private Animation dyingAnimation;
+    private SpriteFont font;
 
     private Texture2D idleTexture;
     private Texture2D flyingTexture;
     private Texture2D dyingTexture;
     public Vector2 position;
     private float velocity = 5f;
-    private float acceleration = .01f;
+    private float acceleration = .001f;
     private float maxVelocity = 10f;
     public float radius;
 
     private float currentLife = 15f;
 
-    private Vector2 scale = new Vector2(.3f, .3f);
+    private Vector2 scale = new Vector2(.25f, .25f);
 
     public Wizard (Game1 game) : base(game) {
       position = game.screenCenter;
@@ -36,13 +37,14 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     public override void LoadContent() {
+      font = game.Content.Load<SpriteFont>("Font");
       // 521px wide x 464px high
       idleTexture = game.Content.Load<Texture2D>("fairy_idle");
       // 536px wide x 501px high
       flyingTexture = game.Content.Load<Texture2D>("fairy_fly");
       //695px wide x 640px high
       dyingTexture = game.Content.Load<Texture2D>("fairy_die");
-      radius = (500 / 2) * scale.X;
+      radius = (500 * scale.X) / 2;
       idleSpriteSheet = new Spritesheet.Spritesheet(idleTexture).WithGrid((521,464),(0,0),(0,0));
       flyingSpriteSheet = new Spritesheet.Spritesheet(flyingTexture).WithGrid((536, 501), (0, 0), (0, 0));
       dyingSpriteSheet = new Spritesheet.Spritesheet(dyingTexture).WithGrid((695, 640), (0, 0), (0, 0));
@@ -98,16 +100,18 @@ namespace WizardSurf.Desktop.Entities {
       }
     }
 
+    private float alpha = .95f;
     public override void Draw(GameTime gameTime) {
        if (CurrentState == State.IDLE) {
-        game.spriteBatch.Draw(idleAnimation, position, Color.White, 0, scale, 0);
+        game.spriteBatch.Draw(idleAnimation, position, Color.White * alpha, 0, scale, 0);
       } else if (CurrentState == State.LEFT) {
-        game.spriteBatch.Draw(movingLeftAnimation, position, Color.White, 0, scale, 0);
+        game.spriteBatch.Draw(movingLeftAnimation, position, Color.White * alpha, 0, scale, 0);
       } else if (CurrentState == State.RIGHT) {
-        game.spriteBatch.Draw(movingAnimation, position, Color.White, 0, scale, 0);
+        game.spriteBatch.Draw(movingAnimation, position, Color.White * alpha, 0, scale, 0);
       } else if (CurrentState == State.DESTROYING) {
-        game.spriteBatch.Draw(dyingAnimation, position, Color.White, 0, scale, 0);
+        game.spriteBatch.Draw(dyingAnimation, position, Color.White * alpha, 0, scale, 0);
       }
+      game.spriteBatch.DrawString(font, "X", GetPosition(), Color.White);
     } 
 
     private void HandleKeyboardInput() {
@@ -134,8 +138,8 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     public Vector2 GetPosition() {
-      var theWidth = (536 / 2) * scale.X;
-      var theHeight = (501 / 2) * scale.Y;
+      var theWidth = (500 * scale.X) / 2;
+      var theHeight = (501 * scale.Y) / 2;
       return new Vector2(position.X + theWidth, position.Y + theHeight);
     }
 

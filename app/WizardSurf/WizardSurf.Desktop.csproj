@@ -55,6 +55,7 @@
     <Compile Include="Screens\SurfScreen.cs" />
     <Compile Include="DebugPanel.cs" />
     <Compile Include="EntityImplementations\Fireballs.cs" />
+    <Compile Include="Spawners\WallSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -128,6 +129,7 @@
     <Folder Include="Util\" />
     <Folder Include="Screens\" />
     <Folder Include="EntityImplementations\" />
+    <Folder Include="Spawners\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

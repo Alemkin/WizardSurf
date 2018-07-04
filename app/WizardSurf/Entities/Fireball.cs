@@ -6,22 +6,22 @@ using Microsoft.Xna.Framework.Input;
 namespace WizardSurf.Desktop.Entities {
   public class Fireball : BaseEntity {
 
+    //TODO create lower class called moving entity, to support of types
     public Texture2D texture;
     private float scale = 1f;
     public Vector2 position;
     public Vector2 initialPosition;
-    //TODO implement rotation
-    private float rotation;
+    private float rotation = 0f;
     private Vector2 velocity;
     //TODO use particle engine to enhance fireball
     public float radius;
     public float damage = 5f;
+    private SpriteFont font;
 
     public Boolean offScreen = false;
-    public Fireball(Game1 game, Vector2 velocity, Vector2 startPosition, float rotation) : base(game) {
+    public Fireball(Game1 game, Vector2 velocity, Vector2 startPosition) : base(game) {
       position = startPosition;
       initialPosition = startPosition;
-      this.rotation = rotation;
       this.velocity = velocity;
     }
 
@@ -29,6 +29,7 @@ namespace WizardSurf.Desktop.Entities {
       texture = game.Content.Load<Texture2D>("fireball");
       radius = texture.Height / 2 * scale;
       origin = new Vector2(texture.Width / 2, texture.Height / 2);
+      font = game.Content.Load<SpriteFont>("Font");
     }
 
     public override void UnloadContent() {
@@ -44,14 +45,18 @@ namespace WizardSurf.Desktop.Entities {
       }
       position.X += velocity.X;
       position.Y += velocity.Y;
+      //TODO more gravity
+      velocity.Y += 0.01f;
+      rotation = (float)Math.Atan2(velocity.Y, velocity.X);
     }
 
     public override void Draw(GameTime gameTime) {
-      game.spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+      game.spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.FlipHorizontally, 0f);
+      game.spriteBatch.DrawString(font, "X", GetPosition(), Color.Black);
     }
 
     public Vector2 GetPosition() {
-      return new Vector2(position.X + ((texture.Width / 2) * scale) , position.Y + ((texture.Height / 2) * scale));
+      return position;
     }
 
     public void SetVelocity(Vector2 velocity) {
