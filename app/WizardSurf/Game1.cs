@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using WizardSurf.Desktop.Entities;
@@ -22,7 +23,6 @@ namespace WizardSurf.Desktop {
       graphics.PreferredBackBufferWidth = 1280;
       graphics.PreferredBackBufferHeight = 720;
       Window.Title = "Wizard";
-      Window.AllowUserResizing = true;
       Content.RootDirectory = "Content";
     }
 

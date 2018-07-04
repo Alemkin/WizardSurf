@@ -13,8 +13,6 @@ namespace WizardSurf.Desktop.Screens {
     private Wizard wizard;
     private Fireballs fireballs;
     private Song song;
-    //TODO add background music
-    //TODO on updates check location of wizard + fireballs and see if any collisions, and apply damage
 
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
@@ -41,7 +39,6 @@ namespace WizardSurf.Desktop.Screens {
     }
 
     private void CheckIfFireballCollision(GameTime gameTime) {
-      //TODO fix this when adding random fireballs, and add function to Fireballs.cs
       fireballs.Update(gameTime);
       fireballs.CheckWizardCollisions(wizard);
       if (wizard.CurrentState == BaseEntity.State.DESTROYED) {

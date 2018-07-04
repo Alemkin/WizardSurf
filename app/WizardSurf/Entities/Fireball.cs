@@ -50,8 +50,9 @@ namespace WizardSurf.Desktop.Entities {
       rotation = (float)Math.Atan2(velocity.Y, velocity.X);
     }
 
+    private float alpha = .9f;
     public override void Draw(GameTime gameTime) {
-      game.spriteBatch.Draw(texture, position, null, Color.White, rotation, origin, scale, SpriteEffects.FlipHorizontally, 0f);
+      game.spriteBatch.Draw(texture, position, null, Color.White * alpha, rotation, origin, scale, SpriteEffects.FlipHorizontally, 0f);
       game.spriteBatch.DrawString(font, "X", GetPosition(), Color.Black);
     }
 

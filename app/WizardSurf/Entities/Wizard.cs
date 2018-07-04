@@ -111,7 +111,9 @@ namespace WizardSurf.Desktop.Entities {
       } else if (CurrentState == State.DESTROYING) {
         game.spriteBatch.Draw(dyingAnimation, position, Color.White * alpha, 0, scale, 0);
       }
-      game.spriteBatch.DrawString(font, "X", GetPosition(), Color.White);
+      if (CurrentState != State.DESTROYING && CurrentState != State.DESTROYED) {
+        game.spriteBatch.DrawString(font, "X", GetPosition(), Color.Black);
+      }
     } 
 
     private void HandleKeyboardInput() {
@@ -138,6 +140,7 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     public Vector2 GetPosition() {
+      if (CurrentState == State.DESTROYED || CurrentState == State.DESTROYING) return new Vector2(-5000, -5000);
       var theWidth = (500 * scale.X) / 2;
       var theHeight = (501 * scale.Y) / 2;
       return new Vector2(position.X + theWidth, position.Y + theHeight);
