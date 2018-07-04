@@ -11,6 +11,7 @@ namespace WizardSurf.Desktop.Spawners {
     public WallSpawner() {
     }
 
+    //TODO add chance to spawn power ups
     public List<Fireball> Spawn(Game1 game, int number) {
       var fireballs = new List<Fireball>();
       for (int i = 0; i < number; i++) {
@@ -46,11 +47,11 @@ namespace WizardSurf.Desktop.Spawners {
     }
 
     private float CalculateY(double speed, double angle) {
-      return (float)(speed * Math.Cos(angle));
+      return (float)(speed * Math.Sin(angle));
     }
 
     private float CalculateX(double speed, double angle) {
-      return (float)(speed * Math.Sin(angle));
+      return (float)(speed * Math.Cos(angle));
     }
 
     //TODO fix angles

@@ -33,7 +33,6 @@ namespace WizardSurf.Desktop.EntityImplementations {
           fireballRemovals.Add(f);
           Fireball newFireball = spawner.Spawn(game);
           newFireball.LoadContent();
-          newFireball.Update(gameTime);
           fireballAdditions.Add(newFireball);
         }
       });
@@ -43,15 +42,20 @@ namespace WizardSurf.Desktop.EntityImplementations {
 
     public void CheckWizardCollisions(Wizard wizard) {
       var fireballRemovals = new List<Fireball>();
+      var fireballAdditions = new List<Fireball>();
       fireballs.ForEach(f => {
         if (f == null) return;
         var radiusAdded = f.radius + wizard.radius;
         if (Vector2.Distance(f.GetPosition(), wizard.GetPosition()) < radiusAdded - 30f) {
           wizard.ApplyHealth(-f.damage);
           fireballRemovals.Add(f);
+          Fireball newFireball = spawner.Spawn(game);
+          newFireball.LoadContent();
+          fireballAdditions.Add(newFireball);
         }
       });
       fireballs.RemoveAll(f => fireballRemovals.Contains(f));
+      fireballs.AddRange(fireballAdditions);
     }
 
     public override void Draw(GameTime gameTime) {

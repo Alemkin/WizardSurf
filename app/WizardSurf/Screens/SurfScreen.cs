@@ -14,6 +14,7 @@ namespace WizardSurf.Desktop.Screens {
     private Fireballs fireballs;
     private Song song;
 
+    //TODO add Game Over Screen
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
       wizard = new Wizard(game);

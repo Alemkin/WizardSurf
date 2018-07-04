@@ -46,7 +46,7 @@ namespace WizardSurf.Desktop {
       game.spriteBatch.DrawString(font, "Elapsed Time: " + gameTime.TotalGameTime.Seconds.ToString() + " seconds", secondsTitlePosition, Color.White);
       game.spriteBatch.DrawString(font, "Framerate: " + currentFramerate.ToString(), frameratePosition, Color.White);
       game.spriteBatch.DrawString(font, "Current Velocity: " + wizardVelocity.ToString(), velocityPosition, Color.White);
-      game.spriteBatch.DrawString(font, "LIFE: " + wizardLife.ToString(), lifePosition, Color.CornflowerBlue);
+      game.spriteBatch.DrawString(font, "LIFE: " + wizardLife.ToString(), lifePosition, Color.White);
     }
   }
 }

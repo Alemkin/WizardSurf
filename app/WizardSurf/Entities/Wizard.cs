@@ -18,6 +18,8 @@ namespace WizardSurf.Desktop.Entities {
     private Animation dyingAnimation;
     private SpriteFont font;
 
+    //TODO add hurt animation
+    //TODO add special moves
     private Texture2D idleTexture;
     private Texture2D flyingTexture;
     private Texture2D dyingTexture;
