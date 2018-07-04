@@ -43,7 +43,7 @@ namespace WizardSurf.Desktop {
 
 
     public override void Draw(GameTime gameTime) {
-      game.spriteBatch.DrawString(font, "Elapsed Time: " + gameTime.TotalGameTime.TotalSeconds.ToString() + " seconds", secondsTitlePosition, Color.White);
+      game.spriteBatch.DrawString(font, "Elapsed Time: " + Math.Round(gameTime.TotalGameTime.TotalSeconds).ToString() + " seconds", secondsTitlePosition, Color.White);
       game.spriteBatch.DrawString(font, "Framerate: " + currentFramerate.ToString(), frameratePosition, Color.White);
       game.spriteBatch.DrawString(font, "Current Velocity: " + wizardVelocity.ToString(), velocityPosition, Color.White);
       game.spriteBatch.DrawString(font, "LIFE: " + wizardLife.ToString(), lifePosition, Color.White);

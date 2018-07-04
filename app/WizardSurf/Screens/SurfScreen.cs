@@ -9,16 +9,31 @@ using WizardSurf.Desktop.EntityImplementations;
 namespace WizardSurf.Desktop.Screens {
   public class SurfScreen : BaseScreen {
     private Texture2D background;
+    private SpriteFont font;
     Rectangle skyRectangle;
     private Wizard wizard;
     private Fireballs fireballs;
     private Song song;
 
-    //TODO add Game Over Screen
+
+    private int transparency = 150;
+    private Texture2D gameOverTexture;
+    private Color [] gameOverColor = new Color [1];
+    private Rectangle gameOverColorRectangle;
+    private Vector2 centerScreen;
+
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
       wizard = new Wizard(game);
       fireballs = new Fireballs(game);
+      font = game.Content.Load<SpriteFont>("Font");
+      gameOverColorRectangle =
+        new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
+      gameOverTexture = new Texture2D(game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+      gameOverColor [0] = Color.FromNonPremultiplied(255, 255, 255, transparency);
+      gameOverTexture.SetData<Color>(gameOverColor);
+      centerScreen = new Vector2((game.graphics.PreferredBackBufferWidth / 2) - 50f,
+                                     (game.graphics.PreferredBackBufferHeight / 2) - 50f);
     }
 
     public override void LoadContent() {
@@ -64,6 +79,10 @@ namespace WizardSurf.Desktop.Screens {
       game.spriteBatch.Draw(background, skyRectangle, Color.White);
       wizard.Draw(gameTime);
       fireballs.Draw(gameTime);
+      if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
+        game.spriteBatch.Draw(gameOverTexture, gameOverColorRectangle, Color.Black);
+        game.spriteBatch.DrawString(font, "You DED", centerScreen, Color.Red);
+      }
     }
   }
 }
