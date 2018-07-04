@@ -100,3 +100,9 @@
 /processorParam:TextureFormat=Color
 /build:background.png
 
+#begin wizard.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:wizard.ogg
+

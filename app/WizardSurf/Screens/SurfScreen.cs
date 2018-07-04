@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using WizardSurf.Desktop.Entities;
 using WizardSurf.Desktop.EntityImplementations;
 
@@ -11,6 +12,7 @@ namespace WizardSurf.Desktop.Screens {
     Rectangle skyRectangle;
     private Wizard wizard;
     private Fireballs fireballs;
+    private Song song;
     //TODO add background music
     //TODO on updates check location of wizard + fireballs and see if any collisions, and apply damage
 
@@ -22,6 +24,8 @@ namespace WizardSurf.Desktop.Screens {
 
     public override void LoadContent() {
       background = game.Content.Load<Texture2D>("background");
+      song = game.Content.Load<Song>("wizard");
+      MediaPlayer.Play(song);
       wizard.LoadContent();
       fireballs.LoadContent();
     }
