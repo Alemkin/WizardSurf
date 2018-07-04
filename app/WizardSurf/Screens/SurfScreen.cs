@@ -24,7 +24,6 @@ namespace WizardSurf.Desktop.Screens {
     public override void LoadContent() {
       background = game.Content.Load<Texture2D>("background");
       song = game.Content.Load<Song>("wizard");
-      MediaPlayer.Play(song);
       wizard.LoadContent();
       fireballs.LoadContent();
     }
@@ -34,7 +33,21 @@ namespace WizardSurf.Desktop.Screens {
       fireballs.UnloadContent();
     }
 
+    private bool playingSong = false;
+    private bool paused = false;
     public override void Update(GameTime gameTime) {
+      if (playingSong == false) {
+        MediaPlayer.Play(song);
+        playingSong = true;
+      }
+      if (paused == true) {
+        MediaPlayer.Resume();
+        paused = false;
+      }
+      if (game.CurrentGameState == Game1.GameState.PAUSE) {
+        MediaPlayer.Pause();
+        paused = true;
+      }
       wizard.Update(gameTime);
       CheckIfFireballCollision(gameTime);
     }

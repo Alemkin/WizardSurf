@@ -126,19 +126,35 @@ namespace WizardSurf.Desktop.Entities {
       velocity = Math.Min(velocity + acceleration, maxVelocity);
 
       CurrentState = State.IDLE;
-      if (game.inputHelper.IsKeyDown (Keys.Right)) {
+      if (game.inputHelper.IsKeyDown (Keys.Right) && WillPutOutOfBoundsRight() == false) {
         CurrentState = State.RIGHT;
         position.X += velocity;
-      } else if (game.inputHelper.IsKeyDown (Keys.Left)) {
+      } else if (game.inputHelper.IsKeyDown (Keys.Left) && WillPutOutOfBoundsLeft() == false) {
         CurrentState = State.LEFT;
         position.X -= velocity;
       }
 
-      if (game.inputHelper.IsKeyDown(Keys.Down)) {
+      if (game.inputHelper.IsKeyDown(Keys.Down) && WillPutOutOfBoundsDown() == false) {
         position.Y += velocity;
-      } else if (game.inputHelper.IsKeyDown(Keys.Up)) {
+      } else if (game.inputHelper.IsKeyDown(Keys.Up) && WillPutOutOfBoundsUp() == false) {
         position.Y -= velocity;
       }
+    }
+
+    private bool WillPutOutOfBoundsLeft() {
+      return (position.X - velocity) < 5f;
+    }
+
+    private bool WillPutOutOfBoundsRight() {
+      return (position.X + velocity) > game.graphics.PreferredBackBufferWidth - 100f;
+    }
+
+    private bool WillPutOutOfBoundsUp() {
+      return (position.Y - velocity) < 5f;
+    }
+
+    private bool WillPutOutOfBoundsDown() {
+      return (position.Y + velocity) > game.graphics.PreferredBackBufferHeight - 180f;
     }
 
     public Vector2 GetPosition() {

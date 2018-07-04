@@ -10,6 +10,8 @@ namespace WizardSurf.Desktop.EntityImplementations {
   public class Fireballs : BaseEntity {
     public List<Fireball> fireballs;
     private WallSpawner spawner = new WallSpawner();
+    List<Fireball> fireballRemovals = new List<Fireball>();
+    List<Fireball> fireballAdditions = new List<Fireball>();
 
     public Fireballs(Game1 game) : base(game) {
       fireballs = new List<Fireball>();
@@ -25,8 +27,6 @@ namespace WizardSurf.Desktop.EntityImplementations {
     }
 
     public override void Update(GameTime gameTime) {
-      var fireballRemovals = new List<Fireball>();
-      var fireballAdditions = new List<Fireball>();
       fireballs.ForEach(f => f.Update(gameTime));
       fireballs.ForEach(f => {
         if (f.offScreen) {
@@ -38,11 +38,15 @@ namespace WizardSurf.Desktop.EntityImplementations {
       });
       fireballs.RemoveAll(f => fireballRemovals.Contains(f));
       fireballs.AddRange(fireballAdditions);
+      ClearLists();
+    }
+
+    private void ClearLists() {
+      fireballRemovals.Clear();
+      fireballAdditions.Clear();      
     }
 
     public void CheckWizardCollisions(Wizard wizard) {
-      var fireballRemovals = new List<Fireball>();
-      var fireballAdditions = new List<Fireball>();
       fireballs.ForEach(f => {
         if (f == null) return;
         var radiusAdded = f.radius + wizard.radius;
@@ -56,6 +60,7 @@ namespace WizardSurf.Desktop.EntityImplementations {
       });
       fireballs.RemoveAll(f => fireballRemovals.Contains(f));
       fireballs.AddRange(fireballAdditions);
+      ClearLists();
     }
 
     public override void Draw(GameTime gameTime) {
