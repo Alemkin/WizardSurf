@@ -118,3 +118,9 @@
 /processorParam:TextureFormat=Color
 /build:pause_background.png
 
+#begin ded.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ded.ogg
+

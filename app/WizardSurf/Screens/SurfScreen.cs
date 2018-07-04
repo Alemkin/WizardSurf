@@ -14,6 +14,7 @@ namespace WizardSurf.Desktop.Screens {
     private Wizard wizard;
     private Fireballs fireballs;
     private Song song;
+    private Song dedSong;
 
 
     private int transparency = 150;
@@ -40,6 +41,7 @@ namespace WizardSurf.Desktop.Screens {
     public override void LoadContent() {
       background = game.Content.Load<Texture2D>("background");
       song = game.Content.Load<Song>("wizard");
+      dedSong = game.Content.Load<Song>("ded");
       wizard.LoadContent();
       fireballs.LoadContent();
     }
@@ -77,10 +79,22 @@ namespace WizardSurf.Desktop.Screens {
       }
     }
 
+    private bool playingDedSong = false;
+    private void PlayDed() {
+      if (playingDedSong == false) {
+        MediaPlayer.Play(dedSong);
+        MediaPlayer.IsRepeating = false;
+        playingDedSong = true;
+      }
+    }
+
     public override void Draw(GameTime gameTime) {
       game.spriteBatch.Draw(background, skyRectangle, Color.White);
       wizard.Draw(gameTime);
       fireballs.Draw(gameTime);
+      if (wizard.CurrentState == BaseEntity.State.DESTROYING) {
+        PlayDed();
+      }
       if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
         game.spriteBatch.Draw(gameOverTexture, gameOverColorRectangle, Color.Black);
         game.spriteBatch.DrawString(font, "You DED", centerScreen, Color.Red);
