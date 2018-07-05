@@ -93,7 +93,6 @@ namespace WizardSurf.Desktop.Screens {
       if (playingDedSong && !playingDedSongCont) {
         if (playingDedFrameCount++ > 720) {
           MediaPlayer.Play(dedSongCont);
-          MediaPlayer.IsRepeating = true;
           playingDedSongCont = true;
         }
       }
