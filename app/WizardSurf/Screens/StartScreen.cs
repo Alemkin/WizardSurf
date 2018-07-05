@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using WizardSurf.Desktop;
 
 namespace WizardSurf.Desktop.Screens {
@@ -10,6 +11,7 @@ namespace WizardSurf.Desktop.Screens {
     private SpriteFont font;
     private Texture2D background;
     private Rectangle pauseRectangle;
+    private Song song;
 
     private Vector2 startOptionPosition;
     private Vector2 quitOptionPosition;
@@ -32,12 +34,19 @@ namespace WizardSurf.Desktop.Screens {
     public override void LoadContent() {
       font = game.Content.Load<SpriteFont>("Font");
       background = game.Content.Load<Texture2D>("pause_background");
+      song = game.Content.Load<Song>("startmenu");
     }
 
     public override void UnloadContent() {
     }
 
+    private bool isPlayingSong = false;
     public override void Update(GameTime gameTime) {
+      if (isPlayingSong == false) {
+        MediaPlayer.Play(song);
+        MediaPlayer.IsRepeating = true;
+        isPlayingSong = true;
+      }
       if (game.CurrentGameState == Game1.GameState.PAUSE) {
         StartString = "Resume";
       } else {

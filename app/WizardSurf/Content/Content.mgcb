@@ -124,3 +124,15 @@
 /processorParam:Quality=Best
 /build:ded.ogg
 
+#begin dedcont.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:dedcont.ogg
+
+#begin startmenu.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:startmenu.mp3
+
