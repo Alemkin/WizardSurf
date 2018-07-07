@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WizardSurf.Desktop.Engines;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,7 +9,6 @@ using Spritesheet;
 namespace WizardSurf.Desktop.Entities {
   public class Wizard : BaseEntity {
 
-    //Build particle engine and add particles under wizard
     private Spritesheet.Spritesheet idleSpriteSheet;
     private Spritesheet.Spritesheet flyingSpriteSheet;
     private Spritesheet.Spritesheet dyingSpriteSheet;
@@ -17,6 +17,7 @@ namespace WizardSurf.Desktop.Entities {
     private Animation movingLeftAnimation;
     private Animation dyingAnimation;
     private SpriteFont font;
+    private ParticleEngine particleEngine;
 
     //TODO add hurt animation
     //TODO add special moves
@@ -51,6 +52,26 @@ namespace WizardSurf.Desktop.Entities {
       flyingSpriteSheet = new Spritesheet.Spritesheet(flyingTexture).WithGrid((536, 501), (0, 0), (0, 0));
       dyingSpriteSheet = new Spritesheet.Spritesheet(dyingTexture).WithGrid((695, 640), (0, 0), (0, 0));
       CreateAnimations();
+
+      List<Texture2D> textures = new List<Texture2D>();
+      textures.Add(game.Content.Load<Texture2D>("diamond"));
+      particleEngine = new ParticleEngine(game, textures, GetBottomPos(), BuildPalette());
+    }
+
+    private Vector2 GetBottomPos() {
+      var currentPos = GetPosition();
+      currentPos.Y += (480 * scale.Y) / 2;
+      return currentPos;      
+    }
+    private List<ParticleEngine.RGBA> BuildPalette() {
+      var alpha = .95f;
+      var palette = new List<ParticleEngine.RGBA>();
+      palette.Add(new ParticleEngine.RGBA(115, 195, 130, alpha));
+      palette.Add(new ParticleEngine.RGBA(70, 150, 90, alpha));
+      palette.Add(new ParticleEngine.RGBA(130, 110, 90, alpha));
+      palette.Add(new ParticleEngine.RGBA(88, 70, 60, alpha));
+      palette.Add(new ParticleEngine.RGBA(0, 0, 22, alpha));
+      return palette;
     }
 
     private void CreateAnimations() {
@@ -79,6 +100,9 @@ namespace WizardSurf.Desktop.Entities {
       HandleWizardDeath();
       UpdateAnimations(gameTime);
       HandleKeyboardInput();
+
+      particleEngine.EmitterLocation = GetBottomPos();
+      particleEngine.Update(gameTime);
     }
 
     private void UpdateAnimations(GameTime gameTime) {
@@ -115,6 +139,7 @@ namespace WizardSurf.Desktop.Entities {
       }
       if (CurrentState != State.DESTROYING && CurrentState != State.DESTROYED) {
         game.spriteBatch.DrawString(font, "X", GetPosition(), Color.Black);
+        particleEngine.Draw(gameTime);
       }
     } 
 

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using WizardSurf.Desktop.Entities;
-using WizardSurf.Desktop.EntityImplementations;
+using WizardSurf.Desktop.Engines;
 
 namespace WizardSurf.Desktop.Screens {
   public class SurfScreen : BaseScreen {
@@ -12,7 +12,7 @@ namespace WizardSurf.Desktop.Screens {
     private SpriteFont font;
     Rectangle skyRectangle;
     private Wizard wizard;
-    private Fireballs fireballs;
+    private FireballEngine fireballs;
     private Song song;
     private Song dedSong;
     private Song dedSongCont;
@@ -24,11 +24,13 @@ namespace WizardSurf.Desktop.Screens {
     private Rectangle gameOverColorRectangle;
     private Vector2 centerScreen;
 
-    //TODO add win condition, e.g. after 100 seconds, you win
+    // TODO add win condition, e.g. after 100 seconds, you win
+    // perhaps add stages
+    // Add rolling credits after death
     public SurfScreen(Game1 game) : base(game) {
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
       wizard = new Wizard(game);
-      fireballs = new Fireballs(game);
+      fireballs = new FireballEngine(game);
       font = game.Content.Load<SpriteFont>("Font");
       gameOverColorRectangle =
         new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);

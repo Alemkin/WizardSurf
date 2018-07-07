@@ -6,7 +6,6 @@ using WizardSurf.Desktop.Entities;
 namespace WizardSurf.Desktop.Spawners {
   public class WallSpawner {
     public enum Wall { WEST = 0, NORTH = 1, EAST = 2 }
-    private Random random = new Random();
 
     public WallSpawner() {
     }
@@ -25,22 +24,27 @@ namespace WizardSurf.Desktop.Spawners {
     }
 
     private Fireball CreateRandomFireball(Game1 game) {
-      var wall = random.Next(3);
-      var speed = (double)random.Next(4, 8);
+      var wall = Game1.random.Next(3);
+      var speed = (double)Game1.random.Next(4, 8);
       var angle = (double)CalculateAngle(wall);
-      var velocity = new Vector2(CalculateX(speed, angle), CalculateY(speed, angle));
+      var radians = ConvertToRadians(angle);
+      var velocity = new Vector2(CalculateX(speed, radians), CalculateY(speed, radians));
       var position = CalculatePosition(game, wall);
       return new Fireball(game, velocity, position);
+    }
+
+    private double ConvertToRadians(double angle) {
+      return Math.PI * (angle / 180);
     }
 
     private Vector2 CalculatePosition(Game1 game, int wall) {
       switch (wall) {
         case (int)Wall.WEST:
-          return new Vector2(0, random.Next(game.graphics.PreferredBackBufferHeight + 1));
+          return new Vector2(0, Game1.random.Next(game.graphics.PreferredBackBufferHeight + 1));
         case (int)Wall.NORTH:
-          return new Vector2(random.Next(game.graphics.PreferredBackBufferWidth + 1), 0);
+          return new Vector2(Game1.random.Next(game.graphics.PreferredBackBufferWidth + 1), 0);
         case (int)Wall.EAST:
-          return new Vector2(game.graphics.PreferredBackBufferWidth, random.Next(game.graphics.PreferredBackBufferHeight + 1));
+          return new Vector2(game.graphics.PreferredBackBufferWidth, Game1.random.Next(game.graphics.PreferredBackBufferHeight + 1));
         default:
           return new Vector2(0, 0);
       }
@@ -54,15 +58,14 @@ namespace WizardSurf.Desktop.Spawners {
       return (float)(speed * Math.Cos(angle));
     }
 
-    //TODO fix angles
     private int CalculateAngle(int wall) {
       switch (wall) {
         case (int)Wall.WEST:
-          return random.Next(-180, 0);
+          return Game1.random.Next(-90, 90);
         case (int)Wall.NORTH:
-          return random.Next(180, 360);
+          return Game1.random.Next(0, 180);
         case (int)Wall.EAST:
-          return random.Next(90, 270);
+          return Game1.random.Next(90, 270);
         default:
           return 0;
       }

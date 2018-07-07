@@ -6,16 +6,16 @@ using Microsoft.Xna.Framework.Input;
 using WizardSurf.Desktop.Entities;
 using WizardSurf.Desktop.Spawners;
 
-namespace WizardSurf.Desktop.EntityImplementations {
-  public class Fireballs : BaseEntity {
+namespace WizardSurf.Desktop.Engines {
+  public class FireballEngine : BaseEntity {
     public List<Fireball> fireballs;
     private WallSpawner spawner = new WallSpawner();
     List<Fireball> fireballRemovals = new List<Fireball>();
     List<Fireball> fireballAdditions = new List<Fireball>();
 
-    public Fireballs(Game1 game) : base(game) {
+    public FireballEngine(Game1 game) : base(game) {
       fireballs = new List<Fireball>();
-      fireballs.AddRange(spawner.Spawn(game, 18));
+      fireballs.AddRange(spawner.Spawn(game, 14));
     }
 
     public override void LoadContent() {

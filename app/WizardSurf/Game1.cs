@@ -11,6 +11,7 @@ namespace WizardSurf.Desktop {
     public InputHelper inputHelper;
     public Vector2 screenCenter;
     public SpriteBatch spriteBatch;
+    public static Random random = new Random();
 
     public enum GameState { START, SURFSCREEN, PAUSE }
     public GameState CurrentGameState { get; set; }
