@@ -77,7 +77,7 @@ namespace WizardSurf.Desktop.Screens {
 
     private void CheckIfFireballCollision(GameTime gameTime) {
       fireballs.Update(gameTime);
-      fireballs.CheckWizardCollisions(wizard);
+      fireballs.CheckWizardCollisions(wizard, gameTime);
       if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
         wizard.UnloadContent();
       }

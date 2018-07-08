@@ -9,7 +9,7 @@ namespace WizardSurf.Desktop.Entities {
   public class Fireball : BaseEntity {
 
     public Texture2D texture;
-    private float scale = 1f;
+    private float scale = .7f;
     public Vector2 position;
     public Vector2 initialPosition;
     private float rotation = 0f;
@@ -28,15 +28,15 @@ namespace WizardSurf.Desktop.Entities {
 
     public override void LoadContent() {
       texture = game.Content.Load<Texture2D>("fireball");
-      radius = (texture.Height / 2 * scale) - 10f;
+      radius = (texture.Height / 2 * scale) - 5f;
       origin = new Vector2(texture.Width / 2, texture.Height / 2);
       font = game.Content.Load<SpriteFont>("Font");
       List<Texture2D> textures = new List<Texture2D>();
-      textures.Add(game.Content.Load<Texture2D>("star"));
-      particleEngine = new ParticleEngine(game, textures, position, BuildPalette());
+      textures.Add(game.Content.Load<Texture2D>("circle"));
+      particleEngine = new ParticleEngine(game, textures, position, BuildPalette(), 2);
     }
 
-    private List<ParticleEngine.RGBA> BuildPalette() {
+    public static List<ParticleEngine.RGBA> BuildPalette() {
       var alpha = .8f;
       var palette = new List<ParticleEngine.RGBA>();
       palette.Add(new ParticleEngine.RGBA(253, 207, 88, alpha));
@@ -52,10 +52,10 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     public override void Update(GameTime gameTime) {
-      if (position.X < -150 
-          || position.X > game.graphics.GraphicsDevice.Viewport.Width + 50f
-          || position.Y < -150
-          || position.Y > game.graphics.GraphicsDevice.Viewport.Height + 50f) {
+      if (position.X < -250 
+          || position.X > game.graphics.GraphicsDevice.Viewport.Width + 250f
+          || position.Y < -250
+          || position.Y > game.graphics.GraphicsDevice.Viewport.Height + 250f) {
         offScreen = true;
       }
       position.X += velocity.X;

@@ -55,7 +55,7 @@ namespace WizardSurf.Desktop.Entities {
 
       List<Texture2D> textures = new List<Texture2D>();
       textures.Add(game.Content.Load<Texture2D>("diamond"));
-      particleEngine = new ParticleEngine(game, textures, GetBottomPos(), BuildPalette());
+      particleEngine = new ParticleEngine(game, textures, GetBottomPos(), BuildPalette(), 1);
     }
 
     private Vector2 GetBottomPos() {

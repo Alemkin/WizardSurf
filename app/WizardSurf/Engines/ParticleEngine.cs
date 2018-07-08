@@ -10,22 +10,26 @@ namespace WizardSurf.Desktop.Engines {
     private List<Texture2D> textures;
     private Game1 game;
     private List<RGBA> palette = new List<RGBA>();
+    private int particleCount;
 
-    public ParticleEngine(Game1 game, List<Texture2D> textures, Vector2 location, List<RGBA> palette) {
+    public ParticleEngine(Game1 game, List<Texture2D> textures, Vector2 location, List<RGBA> palette, int particleCount) {
       this.game = game;
       EmitterLocation = location;
       this.textures = textures;
       this.particles = new List<Particle>();
       this.palette = palette;
+      this.particleCount = particleCount;
     }
 
     public void Update(GameTime gameTime) {
-      var total = 5;
-
-      for (int i = 0; i < total; i++) {
+      for (int i = 0; i < particleCount; i++) {
         particles.Add(GenerateNewParticle());
       }
 
+      KillExpiredParticles(gameTime);
+    }
+
+    public void KillExpiredParticles(GameTime gameTime) {
       for (int p = 0; p < particles.Count; p++) {
         particles [p].Update(gameTime);
         if (particles [p].TTL <= 0) {
