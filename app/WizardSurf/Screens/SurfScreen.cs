@@ -26,7 +26,7 @@ namespace WizardSurf.Desktop.Screens {
     private Vector2 centerScreen;
     private int totalFramesSpentInGame = 0;
 
-    private const int WinConditionSeconds = 10;
+    private const int WinConditionSeconds = 100;
     // perhaps add stages
     // Add rolling credits after death
     public SurfScreen(Game1 game) : base(game) {
