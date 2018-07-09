@@ -172,3 +172,9 @@
 /processorParam:TextureFormat=Color
 /build:star.png
 
+#begin fireball_splash.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:fireball_splash.wav
+

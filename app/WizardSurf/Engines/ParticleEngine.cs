@@ -67,7 +67,7 @@ namespace WizardSurf.Desktop.Engines {
       var angle = 0f;
       var angularVelocity = 0.1f * (float)(Game1.random.NextDouble() * 2 - 1);
       RGBA rgba = palette[Game1.random.Next(palette.Count)];
-      Color color = new Color(rgba.Red, rgba.Green, rgba.Blue, Convert.ToInt32(255f * rgba.Alpha));
+      Color color = new Color(rgba.Red, rgba.Green, rgba.Blue, Convert.ToInt32(200f * rgba.Alpha));
       var size = (float)Game1.random.NextDouble();
       var ttl = 10 + Game1.random.Next(40);
 

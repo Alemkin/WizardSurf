@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using WizardSurf.Desktop.Entities;
 using WizardSurf.Desktop.Spawners;
 using WizardSurf.Desktop.Engines;
@@ -14,7 +15,8 @@ namespace WizardSurf.Desktop.Engines {
     private List<Fireball> fireballRemovals = new List<Fireball>();
     private List<Fireball> fireballAdditions = new List<Fireball>();
     private List<ParticleEngine> particleEngines = new List<ParticleEngine>();
-    List<Texture2D> particleTextures = new List<Texture2D>();
+    private List<Texture2D> particleTextures = new List<Texture2D>();
+    private SoundEffect fireballSplashSound;
 
     public FireballEngine(Game1 game) : base(game) {
       fireballs = new List<Fireball>();
@@ -24,6 +26,7 @@ namespace WizardSurf.Desktop.Engines {
     public override void LoadContent() {
       fireballs.ForEach(f => f.LoadContent());
       particleTextures.Add(game.Content.Load<Texture2D>("star"));
+      fireballSplashSound = game.Content.Load<SoundEffect>("fireball_splash");
     }
 
     public override void UnloadContent() {
@@ -64,6 +67,7 @@ namespace WizardSurf.Desktop.Engines {
           fireballAdditions.Add(newFireball);
 
           BuildFireballSplash(gameTime, f.GetPosition());
+          PlaySplashSoundEffect();
         }
       });
       fireballs.RemoveAll(f => fireballRemovals.Contains(f));
@@ -75,6 +79,10 @@ namespace WizardSurf.Desktop.Engines {
       var particleEngine = new ParticleEngine(game, particleTextures, pos, Fireball.BuildPalette(), 50);
       particleEngine.Update(gameTime);
       particleEngines.Add(particleEngine);
+    }
+
+    private void PlaySplashSoundEffect() {
+      fireballSplashSound.Play();
     }
 
     public override void Draw(GameTime gameTime) {
