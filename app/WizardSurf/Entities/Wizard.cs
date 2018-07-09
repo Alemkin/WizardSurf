@@ -30,7 +30,7 @@ namespace WizardSurf.Desktop.Entities {
     private float maxVelocity = 10f;
     public float radius;
 
-    private float currentLife = 15f;
+    private float currentLife = 3f;
 
     private Vector2 scale = new Vector2(.25f, .25f);
 
@@ -151,18 +151,20 @@ namespace WizardSurf.Desktop.Entities {
       velocity = Math.Min(velocity + acceleration, maxVelocity);
 
       CurrentState = State.IDLE;
+      if (game.inputHelper.IsKeyDown(Keys.Down) && WillPutOutOfBoundsDown() == false) {
+        CurrentState = State.RIGHT;
+        position.Y += velocity;
+      } else if (game.inputHelper.IsKeyDown(Keys.Up) && WillPutOutOfBoundsUp() == false) {
+        CurrentState = State.LEFT;
+        position.Y -= velocity;
+      }
+
       if (game.inputHelper.IsKeyDown (Keys.Right) && WillPutOutOfBoundsRight() == false) {
         CurrentState = State.RIGHT;
         position.X += velocity;
       } else if (game.inputHelper.IsKeyDown (Keys.Left) && WillPutOutOfBoundsLeft() == false) {
         CurrentState = State.LEFT;
         position.X -= velocity;
-      }
-
-      if (game.inputHelper.IsKeyDown(Keys.Down) && WillPutOutOfBoundsDown() == false) {
-        position.Y += velocity;
-      } else if (game.inputHelper.IsKeyDown(Keys.Up) && WillPutOutOfBoundsUp() == false) {
-        position.Y -= velocity;
       }
     }
 

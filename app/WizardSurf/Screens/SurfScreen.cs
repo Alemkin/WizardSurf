@@ -16,15 +16,17 @@ namespace WizardSurf.Desktop.Screens {
     private Song song;
     private Song dedSong;
     private Song dedSongCont;
-
+    private Song victorySong;
+    private Vector2 secondsTitlePosition;
 
     private int transparency = 150;
     private Texture2D gameOverTexture;
     private Color [] gameOverColor = new Color [1];
     private Rectangle gameOverColorRectangle;
     private Vector2 centerScreen;
+    private int totalFramesSpentInGame = 0;
 
-    // TODO add win condition, e.g. after 100 seconds, you win
+    private const int WinConditionSeconds = 10;
     // perhaps add stages
     // Add rolling credits after death
     public SurfScreen(Game1 game) : base(game) {
@@ -38,7 +40,8 @@ namespace WizardSurf.Desktop.Screens {
       gameOverColor [0] = Color.FromNonPremultiplied(255, 255, 255, transparency);
       gameOverTexture.SetData<Color>(gameOverColor);
       centerScreen = new Vector2((game.graphics.PreferredBackBufferWidth / 2) - 50f,
-                                     (game.graphics.PreferredBackBufferHeight / 2) - 50f);
+                                 (game.graphics.PreferredBackBufferHeight / 2) - 50f);
+      secondsTitlePosition = new Vector2((game.graphics.GraphicsDevice.Viewport.Width / 2) - 100f, 20f);
     }
 
     public override void LoadContent() {
@@ -46,6 +49,7 @@ namespace WizardSurf.Desktop.Screens {
       song = game.Content.Load<Song>("wizard");
       dedSong = game.Content.Load<Song>("ded");
       dedSongCont = game.Content.Load<Song>("dedcont");
+      victorySong = game.Content.Load<Song>("victory");
       wizard.LoadContent();
       fireballs.LoadContent();
     }
@@ -58,6 +62,7 @@ namespace WizardSurf.Desktop.Screens {
     private bool playingSong = false;
     private bool paused = false;
     public override void Update(GameTime gameTime) {
+      totalFramesSpentInGame++;
       if (playingSong == false) {
         MediaPlayer.Play(song);
         MediaPlayer.IsRepeating = true;
@@ -77,7 +82,11 @@ namespace WizardSurf.Desktop.Screens {
 
     private void CheckIfFireballCollision(GameTime gameTime) {
       fireballs.Update(gameTime);
-      fireballs.CheckWizardCollisions(wizard, gameTime);
+      if (HasWon(gameTime) == false 
+          && WizardIsBeingDestroyed() == false 
+          && WizardIsDestroyed() == false) {
+        fireballs.CheckWizardCollisions(wizard, gameTime);
+      }
       if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
         wizard.UnloadContent();
       }
@@ -100,18 +109,66 @@ namespace WizardSurf.Desktop.Screens {
       }
     }
 
+    private bool playingVictorySong = false;
+    private void PlayVictory() {
+      if (playingVictorySong == false) {
+        MediaPlayer.Play(victorySong);
+        MediaPlayer.IsRepeating = true;
+        playingVictorySong = true;
+      }      
+    }
+
     public override void Draw(GameTime gameTime) {
       game.spriteBatch.Draw(background, skyRectangle, Color.White);
-      wizard.Draw(gameTime);
+      game.spriteBatch.DrawString(font, BuildSurviveMessage(gameTime), 
+                                  secondsTitlePosition, Color.GreenYellow, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
+      if (HasWon(gameTime) == false) {
+        wizard.Draw(gameTime);
+      }
       fireballs.Draw(gameTime);
-      if (wizard.CurrentState == BaseEntity.State.DESTROYING) {
+      if (WizardIsBeingDestroyed()) {
         PlayDed();
       }
-      if (wizard.CurrentState == BaseEntity.State.DESTROYED) {
+      if (WizardIsDestroyed()) {
         PlayDed();
         game.spriteBatch.Draw(gameOverTexture, gameOverColorRectangle, Color.Black);
         game.spriteBatch.DrawString(font, "You DED", centerScreen, Color.Red);
       }
+      if (WizardIsBeingDestroyed() == false
+          && WizardIsDestroyed() == false
+          && HasWon(gameTime)) {
+        PlayVictory();
+        game.spriteBatch.Draw(gameOverTexture, gameOverColorRectangle, Color.Chartreuse);
+        game.spriteBatch.DrawString(font, "You WERN", centerScreen, Color.White);        
+      }
+    }
+
+    private bool HasWon(GameTime gameTime) {
+      if (WizardIsBeingDestroyed() || WizardIsDestroyed()) return false;
+      return GetTotalSecondsSpentInGame() > WinConditionSeconds;
+    }
+
+    private bool WizardIsBeingDestroyed() {
+      return wizard.CurrentState == BaseEntity.State.DESTROYING;
+    }
+
+    private bool WizardIsDestroyed() {
+      return wizard.CurrentState == BaseEntity.State.DESTROYED;
+    }
+
+    public int GetTotalSecondsSpentInGame() {
+     return totalFramesSpentInGame / 60;
+    }
+
+    private string BuildSurviveMessage(GameTime gameTime) {
+      if (HasWon(gameTime) || WizardIsBeingDestroyed() || WizardIsDestroyed()) {
+        return "";
+      }        
+      return "Survive " + GetTimeLeftToWin() + " more second(s)!";
+    }
+
+    public int GetTimeLeftToWin() {
+      return Math.Max(WinConditionSeconds - GetTotalSecondsSpentInGame(), 0);
     }
   }
 }

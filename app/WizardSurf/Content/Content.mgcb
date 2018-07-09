@@ -178,3 +178,9 @@
 /processorParam:Quality=Best
 /build:fireball_splash.wav
 
+#begin victory.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:victory.ogg
+
