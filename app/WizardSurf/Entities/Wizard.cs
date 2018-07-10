@@ -121,6 +121,7 @@ namespace WizardSurf.Desktop.Entities {
 
       //Waiting for death animation to finish
       if (CurrentState == State.DESTROYING) {
+        if (WillPutOutOfBoundsDown() == false) position.Y += velocity;
         if (deathTicker++ >= 200) {
           CurrentState = State.DESTROYED;
         }
