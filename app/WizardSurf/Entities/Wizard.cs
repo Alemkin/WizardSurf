@@ -30,13 +30,14 @@ namespace WizardSurf.Desktop.Entities {
     private float maxVelocity = 10f;
     public float radius;
 
-    private float currentLife = 3f;
+    private int lives = 3;
 
     private Vector2 scale = new Vector2(.25f, .25f);
 
-    public Wizard (Game1 game) : base(game) {
+    public Wizard (Game1 game, int lives) : base(game) {
       position = game.screenCenter;
       CurrentState = State.IDLE;
+      this.lives = lives;
     }
 
     public override void LoadContent() {
@@ -95,7 +96,7 @@ namespace WizardSurf.Desktop.Entities {
     private int deathTicker = 0;
     public override void Update(GameTime gameTime) {
       game.debugPanel.wizardVelocity = velocity;
-      game.debugPanel.wizardLife = currentLife;
+      game.debugPanel.wizardLife = lives;
 
       HandleWizardDeath();
       UpdateAnimations(gameTime);
@@ -113,7 +114,7 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     private void HandleWizardDeath() {
-      if (currentLife <= 0 && CurrentState != State.DESTROYING && CurrentState != State.DESTROYED) {
+      if (lives <= 0 && CurrentState != State.DESTROYING && CurrentState != State.DESTROYED) {
         CurrentState = State.DESTROYING;
         dyingAnimation.Start(Repeat.Mode.Once);
       }
@@ -192,8 +193,8 @@ namespace WizardSurf.Desktop.Entities {
     }
 
     //TODO add collision handler instead
-    public void ApplyHealth(float healthEffect) {
-      currentLife = Math.Max(currentLife + healthEffect, 0f);
+    public void ApplyHealth(int healthEffect) {
+      lives = Math.Max(lives + healthEffect, 0);
     }
 
   }

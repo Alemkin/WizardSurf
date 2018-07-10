@@ -18,9 +18,10 @@ namespace WizardSurf.Desktop.Engines {
     private List<Texture2D> particleTextures = new List<Texture2D>();
     private SoundEffect fireballSplashSound;
 
-    public FireballEngine(Game1 game) : base(game) {
+    public FireballEngine(Game1 game, int fireballCount = 15, int speedMax = 8) : base(game) {
       fireballs = new List<Fireball>();
-      fireballs.AddRange(spawner.Spawn(game, 15));
+      spawner = new WallSpawner(speedMax);
+      fireballs.AddRange(spawner.Spawn(game, fireballCount));
     }
 
     public override void LoadContent() {

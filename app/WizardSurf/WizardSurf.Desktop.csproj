@@ -59,6 +59,7 @@
     <Compile Include="Entities\Particle.cs" />
     <Compile Include="Engines\ParticleEngine.cs" />
     <Compile Include="Engines\FireballEngine.cs" />
+    <Compile Include="Engines\LevelEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

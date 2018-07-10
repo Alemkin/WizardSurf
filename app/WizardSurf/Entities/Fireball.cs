@@ -15,7 +15,7 @@ namespace WizardSurf.Desktop.Entities {
     private float rotation = 0f;
     private Vector2 velocity;
     public float radius;
-    public float damage = 1f;
+    public int damage = 1;
     private SpriteFont font;
     private ParticleEngine particleEngine;
 

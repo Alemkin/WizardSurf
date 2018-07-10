@@ -7,7 +7,9 @@ namespace WizardSurf.Desktop.Spawners {
   public class WallSpawner {
     public enum Wall { WEST = 0, NORTH = 1, EAST = 2 }
 
-    public WallSpawner() {
+    private int speedMax;
+    public WallSpawner(int speedMax = 8) {
+      this.speedMax = speedMax;
     }
 
     //TODO add chance to spawn power ups
@@ -25,7 +27,7 @@ namespace WizardSurf.Desktop.Spawners {
 
     private Fireball CreateRandomFireball(Game1 game) {
       var wall = Game1.random.Next(3);
-      var speed = (double)Game1.random.Next(4, 8);
+      var speed = (double)Game1.random.Next(4, speedMax);
       var angle = (double)CalculateAngle(wall);
       var radians = ConvertToRadians(angle);
       var velocity = new Vector2(CalculateX(speed, radians), CalculateY(speed, radians));

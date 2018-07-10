@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using WizardSurf.Desktop.Entities;
 using WizardSurf.Desktop.Engines;
+using static WizardSurf.Desktop.Engines.LevelEngine;
 
 namespace WizardSurf.Desktop.Screens {
   public class SurfScreen : BaseScreen {
@@ -18,6 +19,7 @@ namespace WizardSurf.Desktop.Screens {
     private Song dedSongCont;
     private Song victorySong;
     private Vector2 secondsTitlePosition;
+    private Vector2 stageTitlePosition;
 
     private int transparency = 150;
     private Texture2D gameOverTexture;
@@ -26,13 +28,18 @@ namespace WizardSurf.Desktop.Screens {
     private Vector2 centerScreen;
     private int totalFramesSpentInGame = 0;
 
-    private const int WinConditionSeconds = 100;
-    // perhaps add stages
+    private string levelName;
+
+    private int winConditionSeconds;
     // Add rolling credits after death
-    public SurfScreen(Game1 game) : base(game) {
+    // TODO add pause in before starting game
+    //TODO add background and sprite to level
+    public SurfScreen(Game1 game, Level level) : base(game) {
+      levelName = level.Name;
+      winConditionSeconds = level.WinConditionSeconds;
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
-      wizard = new Wizard(game);
-      fireballs = new FireballEngine(game);
+      wizard = new Wizard(game, level.Lives);
+      fireballs = new FireballEngine(game, level.FireballCount, level.MaxSpeed);
       font = game.Content.Load<SpriteFont>("Font");
       gameOverColorRectangle =
         new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
@@ -42,6 +49,7 @@ namespace WizardSurf.Desktop.Screens {
       centerScreen = new Vector2((game.graphics.PreferredBackBufferWidth / 2) - 50f,
                                  (game.graphics.PreferredBackBufferHeight / 2) - 50f);
       secondsTitlePosition = new Vector2((game.graphics.GraphicsDevice.Viewport.Width / 2) - 100f, 20f);
+      stageTitlePosition = new Vector2((game.graphics.GraphicsDevice.Viewport.Width) - 250f, 20f);
     }
 
     public override void LoadContent() {
@@ -118,8 +126,11 @@ namespace WizardSurf.Desktop.Screens {
       }      
     }
 
+    private int countdownToNextLevel = Game1.DEFAULT_LEVEL_FRAME_COUNT;
     public override void Draw(GameTime gameTime) {
       game.spriteBatch.Draw(background, skyRectangle, Color.White);
+      game.spriteBatch.DrawString(font, levelName,
+                                  stageTitlePosition, Color.GreenYellow, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
       game.spriteBatch.DrawString(font, BuildSurviveMessage(gameTime), 
                                   secondsTitlePosition, Color.GreenYellow, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
       if (HasWon(gameTime) == false) {
@@ -139,13 +150,19 @@ namespace WizardSurf.Desktop.Screens {
           && HasWon(gameTime)) {
         PlayVictory();
         game.spriteBatch.Draw(gameOverTexture, gameOverColorRectangle, Color.Chartreuse);
-        game.spriteBatch.DrawString(font, "You WERN", centerScreen, Color.White);        
+        game.spriteBatch.DrawString(font, "You WERN - " + levelName, centerScreen, Color.White);
+        game.spriteBatch.DrawString(font, NextStageMessage(), new Vector2(centerScreen.X, centerScreen.Y + 30f), Color.White);
+        countdownToNextLevel--;
       }
     }
 
-    private bool HasWon(GameTime gameTime) {
+    public string NextStageMessage() {
+      return "Next Stage in: " + Math.Max(countdownToNextLevel / 60, 0) + " seconds";
+    }
+
+    public bool HasWon(GameTime gameTime) {
       if (WizardIsBeingDestroyed() || WizardIsDestroyed()) return false;
-      return GetTotalSecondsSpentInGame() > WinConditionSeconds;
+      return GetTotalSecondsSpentInGame() > winConditionSeconds;
     }
 
     private bool WizardIsBeingDestroyed() {
@@ -168,7 +185,7 @@ namespace WizardSurf.Desktop.Screens {
     }
 
     public int GetTimeLeftToWin() {
-      return Math.Max(WinConditionSeconds - GetTotalSecondsSpentInGame(), 0);
+      return Math.Max(winConditionSeconds - GetTotalSecondsSpentInGame(), 0);
     }
   }
 }
