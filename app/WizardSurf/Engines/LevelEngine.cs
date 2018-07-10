@@ -35,7 +35,7 @@ namespace WizardSurf.Desktop.Engines {
 
     public Level GetNextLevel() {
       // TODO Add secret ending after this level
-      if (levels.Count < 1) return new Level("Can U Die?", 30, 5, 10000, 1000000);
+      if (levels.Count < 1) return new Level("Can U Die?", 40, 6, 10000, 10000);
       return levels.Dequeue();
     }
   }
