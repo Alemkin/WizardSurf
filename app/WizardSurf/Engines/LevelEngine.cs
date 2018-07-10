@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace WizardSurf.Desktop.Engines {
   public class LevelEngine {
-
+    // TODO add background and sprite to level
     public struct Level {
       public Level(string name, int fireballCount, int maxSpeed, int winConditionSeconds, int lives) {
         Name = name;
@@ -18,6 +18,7 @@ namespace WizardSurf.Desktop.Engines {
       public int Lives { get; set; }
     }
 
+    //TODO add hard mode, where lives do not reset, etc
     private Queue<Level> levels;
     public LevelEngine() {
       //TODO fine tune levels
@@ -33,8 +34,8 @@ namespace WizardSurf.Desktop.Engines {
     }
 
     public Level GetNextLevel() {
-      // TODO return completed game level
-      if (levels.Count < 1) return new Level("Free Play", 30, 5, 10000, 1000000);
+      // TODO Add secret ending after this level
+      if (levels.Count < 1) return new Level("Can U Die?", 30, 5, 10000, 1000000);
       return levels.Dequeue();
     }
   }

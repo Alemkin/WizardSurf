@@ -18,8 +18,8 @@ namespace WizardSurf.Desktop {
     public enum GameState { START, SURFSCREEN, PAUSE }
     public GameState CurrentGameState { get; set; }
 
-    // TODO add screen manager that will handle all of the screens via menus
-    //TODO add score tracker for levels completed, and lives lost per level
+    // TODO add score tracker for levels completed, and lives lost per level
+    // TODO add game restart to menu
     public SurfScreen surfScreen;
     public Entity startScreen;
 

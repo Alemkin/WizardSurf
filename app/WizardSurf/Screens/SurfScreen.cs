@@ -33,7 +33,6 @@ namespace WizardSurf.Desktop.Screens {
     private int winConditionSeconds;
     // Add rolling credits after death
     // TODO add pause in before starting game
-    //TODO add background and sprite to level
     public SurfScreen(Game1 game, Level level) : base(game) {
       levelName = level.Name;
       winConditionSeconds = level.WinConditionSeconds;
