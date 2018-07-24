@@ -168,6 +168,11 @@ namespace WizardSurf.Desktop.Entities {
         CurrentState = State.LEFT;
         position.X -= velocity;
       }
+
+      if (game.inputHelper.IsNewKeyPress(Keys.Z)) {
+        // TODO activate shield
+        // Shield active, decrease number of shields left, add shield duration
+      }
     }
 
     private bool WillPutOutOfBoundsLeft() {

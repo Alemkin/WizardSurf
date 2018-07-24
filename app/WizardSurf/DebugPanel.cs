@@ -21,7 +21,7 @@ namespace WizardSurf.Desktop {
       secondsTitlePosition = new Vector2(20, 5);
       frameratePosition = new Vector2(20, 25);
       velocityPosition = new Vector2(20, 45);
-      lifePosition = new Vector2(game.graphics.GraphicsDevice.Viewport.Width - 300f, 
+      lifePosition = new Vector2(game.graphics.GraphicsDevice.Viewport.Width - 200f, 
                                  game.GraphicsDevice.Viewport.Height - 50f);
     }
 

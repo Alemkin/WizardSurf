@@ -10,6 +10,7 @@ using static WizardSurf.Desktop.Engines.LevelEngine;
 namespace WizardSurf.Desktop.Screens {
   public class SurfScreen : BaseScreen {
     private Texture2D background;
+    private string backgroundName;
     private SpriteFont font;
     Rectangle skyRectangle;
     private Wizard wizard;
@@ -36,6 +37,7 @@ namespace WizardSurf.Desktop.Screens {
     public SurfScreen(Game1 game, Level level) : base(game) {
       levelName = level.Name;
       winConditionSeconds = level.WinConditionSeconds;
+      backgroundName = level.Background;
       skyRectangle = new Rectangle(0, 0, game.graphics.PreferredBackBufferWidth, game.graphics.PreferredBackBufferHeight);
       wizard = new Wizard(game, level.Lives);
       fireballs = new FireballEngine(game, level.FireballCount, level.MaxSpeed);
@@ -47,12 +49,13 @@ namespace WizardSurf.Desktop.Screens {
       gameOverTexture.SetData<Color>(gameOverColor);
       centerScreen = new Vector2((game.graphics.PreferredBackBufferWidth / 2) - 50f,
                                  (game.graphics.PreferredBackBufferHeight / 2) - 50f);
-      secondsTitlePosition = new Vector2((game.graphics.GraphicsDevice.Viewport.Width / 2) - 100f, 20f);
-      stageTitlePosition = new Vector2((game.graphics.GraphicsDevice.Viewport.Width) - 250f, 20f);
+      secondsTitlePosition = new Vector2((game.graphics.GraphicsDevice.Viewport.Width / 2) - 150f, 
+                                          game.graphics.PreferredBackBufferHeight - 50f);
+      stageTitlePosition = new Vector2(50f, game.graphics.PreferredBackBufferHeight - 50f);
     }
 
     public override void LoadContent() {
-      background = game.Content.Load<Texture2D>("background");
+      background = game.Content.Load<Texture2D>(backgroundName);
       song = game.Content.Load<Song>("wizard");
       dedSong = game.Content.Load<Song>("ded");
       dedSongCont = game.Content.Load<Song>("dedcont");
@@ -129,9 +132,9 @@ namespace WizardSurf.Desktop.Screens {
     public override void Draw(GameTime gameTime) {
       game.spriteBatch.Draw(background, skyRectangle, Color.White);
       game.spriteBatch.DrawString(font, levelName,
-                                  stageTitlePosition, Color.GreenYellow, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
+                                  stageTitlePosition, Color.Black, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
       game.spriteBatch.DrawString(font, BuildSurviveMessage(gameTime), 
-                                  secondsTitlePosition, Color.GreenYellow, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
+                                  secondsTitlePosition, Color.Black, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
       if (HasWon(gameTime) == false) {
         wizard.Draw(gameTime);
       }
